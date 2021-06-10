@@ -2,8 +2,9 @@ package subtask2
 
 class Abbreviation {
 
-    // TODO: Complete the following function
     fun abbreviationFromA(a: String, b: String): String {
-        throw NotImplementedError("Not implemented")
+        val regex = """[^${b.toLowerCase()}]""".toRegex()
+        val aUpper = a.toLowerCase().replace(regex, "").toUpperCase()
+        return if (aUpper == b) "YES" else "NO"
     }
 }

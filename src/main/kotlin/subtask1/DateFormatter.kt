@@ -1,9 +1,34 @@
 package subtask1
 
-class DateFormatter {
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
-    // TODO: Complete the following function
+class DateFormatter {
+    private val formatter = DateTimeFormatter.ofPattern("dd LLLL, EEEE", Locale("ru"))
+    private val monthNameRu = arrayOf(
+        "",
+        "января",
+        "февраля",
+        "марта",
+        "апреля",
+        "мая",
+        "июня",
+        "июля",
+        "августа",
+        "сентября",
+        "октября",
+        "ноября",
+        "декабря"
+    )
+    private val formatterDayOfWeek = DateTimeFormatter.ofPattern("EEEE", Locale("ru"))
+
     fun toTextDay(day: String, month: String, year: String): String {
-        throw NotImplementedError("Not implemented")
+        return try {
+            val date = LocalDate.of(year.toInt(), month.toInt(), day.toInt())
+            "${date.dayOfMonth} ${monthNameRu[date.monthValue]}, ${date.format(formatterDayOfWeek)}"
+        } catch (e: Exception) {
+            "Такого дня не существует"
+        }
     }
 }
