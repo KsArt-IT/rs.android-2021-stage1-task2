@@ -9,24 +9,10 @@ class Blocks {
 
     fun getData(blockA: Array<*>, blockB: KClass<*>): Any {
         if (blockA.isEmpty()) return ""
-        if (blockB !in listOf(Int::class, String::class, LocalDate::class)) return ""
         return when (blockB) {
-            Int::class -> {
-                blockA.mapNotNull { elem ->
-                    if (elem is Int) elem else null
-                }.sum()
-            }
-            String::class -> {
-                blockA.mapNotNull { elem ->
-                    if (elem is String) elem else null
-                }.joinToString(separator = "")
-            }
-            // в виде строки в формате dd.MM.yyyy
-            LocalDate::class -> {
-                blockA.mapNotNull { elem ->
-                    if (elem is LocalDate) elem else null
-                }.sorted().last().format(formatterDate).orEmpty()
-            }
+            Int::class -> { blockA.filterIsInstance<Int>().sum() }
+            String::class -> { blockA.filterIsInstance<String>().joinToString(separator = "") }
+            LocalDate::class -> { blockA.filterIsInstance<LocalDate>().sorted().last().format(formatterDate).orEmpty() }
             else -> ""
         }
     }
